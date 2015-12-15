@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Shift Plug-in
+Bundle-Name: Shift Plugin
 Bundle-SymbolicName: org.csstudio.shift;singleton:=true
 Bundle-Version: 1.0.4.qualifier
 Require-Bundle: org.eclipse.core.runtime,
