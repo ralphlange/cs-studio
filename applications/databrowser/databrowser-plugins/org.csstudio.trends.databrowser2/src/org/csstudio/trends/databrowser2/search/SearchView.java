@@ -9,13 +9,11 @@ package org.csstudio.trends.databrowser2.search;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
 
 import org.csstudio.apputil.ui.swt.TableColumnSortHelper;
 import org.csstudio.autocomplete.ui.AutoCompleteTypes;
 import org.csstudio.autocomplete.ui.AutoCompleteUIHelper;
 import org.csstudio.autocomplete.ui.AutoCompleteWidget;
-import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.archive.SearchJob;
 import org.csstudio.trends.databrowser2.model.ArchiveDataSource;
@@ -23,15 +21,12 @@ import org.csstudio.trends.databrowser2.model.ChannelInfo;
 import org.csstudio.trends.databrowser2.ui.TableHelper;
 import org.csstudio.ui.util.MinSizeTableColumnLayout;
 import org.csstudio.ui.util.dnd.ControlSystemDragSource;
-import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellLabelProvider;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -55,7 +50,6 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 
 /** Eclipse View for searching the archive
@@ -217,7 +211,6 @@ public class SearchView extends ViewPart
         channel_table = new TableViewer(table_parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
         channel_table.setContentProvider(new ArrayContentProvider());
         TableViewerColumn col = TableHelper.createColumn(table_layout, channel_table, Messages.PVName, 200, 100);
-
         col.setLabelProvider(new CellLabelProvider()
         {
             @Override
@@ -305,23 +298,6 @@ public class SearchView extends ViewPart
                 // return selection.getFirstElement();
             }
         };
-
-        // Double-clicks should have the same effect as context menu -> Data Browser
-        getSite().setSelectionProvider(channel_table);
-        channel_table.addDoubleClickListener(new IDoubleClickListener()
-        {
-            @Override
-            public void doubleClick(DoubleClickEvent event)
-            {
-                IHandlerService handlerService = getSite().getService(IHandlerService.class);
-                try
-                {
-                    handlerService.executeCommand("org.csstudio.trends.databrowser.OpenDataBrowserPopup", null);
-                } catch (CommandException ex) {
-                    Activator.getLogger().log(Level.WARNING, "Failed to open data browser", this); //$NON-NLS-1$
-                }
-            }
-        });
 
         // Add context menu for object contributions
         final MenuManager menu = new MenuManager();
