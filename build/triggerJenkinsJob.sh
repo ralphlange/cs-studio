@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set +x
 
 export token
 
@@ -16,3 +17,5 @@ do
   jenkinsName="cs-studio-${arr[0]}-${arr[1]}-${GIT_BRANCH#*/}"
   curl -X POST https://openepics.ci.cloudbees.com/job/${jenkinsName}/build --data token=${token}
 done
+
+set -x
