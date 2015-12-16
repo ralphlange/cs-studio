@@ -15,7 +15,9 @@ for project in "${sorted_unique[@]}"
 do
   arr=(${project//// })
   jenkinsName="cs-studio-${arr[0]}-${arr[1]}-${GIT_BRANCH#*/}"
+  echo "triggering ${jenkinsName}"
   curl -X POST https://openepics.ci.cloudbees.com/job/${jenkinsName}/build --data token=${token}
 done
 
 set -x
+
